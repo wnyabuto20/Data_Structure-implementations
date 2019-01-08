@@ -1,0 +1,111 @@
+import java.util.Vector;
+public class hashTable{
+   private  static contents[] myarray;
+    private static int size;
+    public hashTable(int size){
+	this.size = size;
+	myarray = new contents[this.size];
+	for(int i =0;i< myarray.length;i++){
+	    myarray[i] = new contents();
+	}
+    }
+
+    public static int hashfunc(String key){
+	return 21%(key.length());
+	}
+    public void insert(String akey){
+	akey = akey.toLowerCase();
+	int index = hashfunc(akey);
+	contents input =new contents(akey,1); ;
+	contents holder = new contents(akey,1);
+
+      	if(akey.equals(myarray[index].getKey()))
+		myarray[index].value += 1;
+	if(myarray[index].getValue() == 0){
+	     myarray[index] = holder;
+	     //holder.next = input.next;
+	     //input.next = holder;
+	    } 
+	    if((myarray[index].getValue() != 0)&&(!akey.equals(myarray[index].getKey())))
+		input = holder;
+	    add(myarray[index],input);
+	
+    }
+    public static boolean delete(String thekey){
+	//	System.out.println("got herea");
+	thekey = thekey.toLowerCase();
+	boolean there = present(thekey);
+	int index = hashfunc(thekey);
+	contents entry = myarray[index];
+	while (entry !=null){
+	    if(entry.getKey() == thekey){
+	    myarray[index] = null;
+	    break;
+	    }
+	    entry = entry.next;
+	}
+	return there;
+
+    }
+    public static int find(String givenkey){
+	givenkey.toLowerCase();
+	int count = 0;
+	int ind = hashfunc(givenkey);
+	//contents entry = myarray[ind];
+	while (myarray[ind] != null){
+	    //System.out.print("got here");
+	    if(myarray[ind].getKey() == givenkey){
+	    count = myarray[ind].getValue();
+	    System.out.print("got here1");
+	    break;
+	    }
+	    myarray[ind] = myarray[ind].next;
+	    System.out.print("got here1");
+	}
+	return count;
+    } 
+    public Vector <Word> allKeyValue(){
+  	Vector<Word> KeyVal = new Vector<Word>();
+	for(int i=0;i<size;i++){
+	    while(myarray[i] != null){
+		KeyVal.add(myarray[i].forVect);
+		    myarray[i] = myarray[i].next;
+	    }
+	}
+	return KeyVal;
+    }
+    public static boolean present(String me){
+    me.toLowerCase();
+	boolean here = false;
+	int ind = hashfunc(me);
+	contents entry = myarray[ind].next;
+	while (entry !=null){
+	    if(entry.getKey() == me){
+		here = true;
+		break;
+	    }
+	    entry = entry.next;
+	}
+	return here;
+    }
+    public void add(contents there,contents tba){
+	while (there.next == null){
+	    there.next = tba;
+	    there = there.next;
+	/*	if(there.next == null)
+	    there.next = tba;
+	else
+	add(there.next.next,tba);*/
+    }
+    }
+public static void main(String[]args){
+    hashTable test = new hashTable(10);
+    test.insert("Wayne");
+    //test.insert("Payne");
+    //test.insert("Wayne");
+
+    System.out.println(test.allKeyValue());
+    //test.delete("Wayne");
+    // System.out.println(find("Wayne"));
+}
+}

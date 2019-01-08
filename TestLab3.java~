@@ -1,0 +1,12 @@
+import java.util.Scanner;
+public class TestLab3{
+    private static CountingDictionary dict = new CountingDictionary(15000);
+    public static void main(String[]args){
+	Scanner keyboard = new Scanner(System.in);
+	System.out.println("file name");
+	    String filename = keyboard.nextLine();
+	ReadFile text = new ReadFile(filename);
+	text.addFileToDict(dict);
+	System.out.print(dict.allKeyValue());
+		    }
+		    }

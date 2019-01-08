@@ -1,0 +1,138 @@
+import java.util.Vector;
+public class CountingDictionary implements CS211CountingDictionaryInterface {
+    private Word [] hashTable;
+    private int size;
+    public CountingDictionary(int size){
+	this.size = size;
+	hashTable = new Word[this.size];
+	    }
+
+    public int hashfunc(String key){
+	return 21%(key.length());
+	}
+    public void insert(String key){
+	key = key.toLowerCase();
+	int value = 0;
+      	int pos = hashfunc(key);
+	if(find(key)== -1){
+	value = 1;
+	Word entry  = new Word(key,value);
+	if(hashTable[pos] == null){
+	    hashTable[pos] = entry;
+	}else{
+	    int j = pos;
+	    while(hashTable[j] != null){
+		j++;
+	    }
+	    hashTable[j] = entry;
+	}
+    }
+	else{
+	addtovalue(key);
+    }
+    }
+    public boolean delete(String key){
+	key = key.toLowerCase();
+	int h = hashfunc(key);
+	if(find(key) == -1){
+	    return false;
+	}
+	else{
+	    Word del = new Word(key,700);
+	    del = hashTable[h];
+	    if(key.equals(del.word())){
+		reducevalue(key);
+		return true;
+	    }else{
+		int x = h;
+		while(hashTable[x] != null){
+		    del = hashTable[x];
+		    if(key.equals(del.word())){
+			reducevalue(key);
+			return true;
+		    }
+		    x++;
+		}
+		return false;
+	    }
+	}
+    }
+    public int find(String key){
+	key = key.toLowerCase();
+	int index = hashfunc(key);
+	int value = 1000;
+	Word findme = new Word(key,value);
+	if(hashTable[index] != null){
+	    findme = hashTable[index];
+	}
+	else{
+	    return -1;
+	}
+	if(key.equals(findme.word()))  {
+	    value = findme.count();
+	    return value;
+	} 
+	else{ 
+	    int i = index;
+	    while(hashTable[i] != null){
+		findme = hashTable[i];
+		if(key.equals(findme.word())){
+		    value = findme.count();
+		    return value;
+		}
+		i++;
+	    }
+	    return -1;
+	} 
+    }
+    public Vector <Word> allKeyValue(){
+	Vector<Word> all = new Vector<Word>();
+	for(int i = 0; i < size;i++){
+	    if(hashTable[i] != null){
+		Word addme = hashTable[i];
+		all.add(addme);
+	    }
+	}
+	return all;
+    }
+    
+    public void addtovalue(String key){
+	key = key.toLowerCase();
+	int hash = hashfunc(key);
+	Word me = new Word(key, 700);
+	me = hashTable[hash];
+	if(key.equals(me.word())){
+	    me.addcount();
+	}else{
+	      int y =hash;
+	      while(hashTable[y] != null){
+		  me = hashTable[y];
+		  if(key.equals(me.word())){
+		      me.addcount();
+		      return;
+		  }
+		  y++;
+	      }	
+	}
+    }
+public void reducevalue(String key){
+    key = key.toLowerCase();
+    int hash = hashfunc(key);
+    Word me = new Word(key, 700);
+    me = hashTable[hash];
+    if(key.equals(me.word())){
+	me.removecount();
+    }else{
+	int y =hash;
+	while(hashTable[y] != null){
+	    me = hashTable[y];
+	    if(key.equals(me.word())){
+		me.removecount();
+		return;
+	    }
+	    y++;
+	}	
+    }
+}
+
+}
