@@ -7,14 +7,7 @@ public class CS211PriorityQueue<V extends Comparable> implements CS211PriorityQu
     public CS211PriorityQueue(){
 	theQ = new Comparable[1000];
     }
-    /*  public V getLeftChild(int i){
-	V lChild = theQ[2*i];
-	return lChild;
-    }
-    public V getRightChild(int i){
-	V rChild = theQ[2*i+1];
-	return rChild;
-    } */
+  
     public void bubbleupMin(int x){
 	V temp = (V)theQ[x];
 	int p = x/2;
