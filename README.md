@@ -12,7 +12,7 @@ good text editor would also come in handy.
 ### Prerequisites
 There are no additional dependencies required. The code can simply be downloaded and run.
 ### Installing
-Download and run
+Download and run the files with the prefix "Test". You can adjust them to test the different data structures implemented here.
 ## Running the tests
 The tests are run on TestLab3.java. For the CountingDictionary, this simply takes a test .txt document, reads it
 and stores the metadata (word and number of appearences) of each word in a HashTable (defined in CountingDictionary.java) from 
